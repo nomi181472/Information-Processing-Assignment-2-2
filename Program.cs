@@ -9,13 +9,12 @@ namespace k173652_Q1
         static void Main(string[] args)
         {
 
-            if (args.Length == 2)
-            {
-
+            
                 string regForUrl= @"^(http|http(s)?://)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?";
                  Regex reUrl = new Regex(regForUrl, RegexOptions.IgnoreCase);
                 string regForDirectory = @"^(?:[a-zA-Z]\:(\\|\/)|file\:\/\/|\\\\|\.(\/|\\))([^\\\/\:\*\?\<\>\'\|]+(\\|\/){0,1})+$";
                 Regex rePath = new Regex(regForDirectory,RegexOptions.IgnoreCase);
+            
                 if (reUrl.IsMatch((args[0])) && rePath.IsMatch((args[1])))
                 {
                     WebClient wc = new WebClient();
@@ -29,12 +28,7 @@ namespace k173652_Q1
                     Console.WriteLine("URL or Path is uncorrect");
                     return;
                 }
-            }
-            else
-            {
-                Console.WriteLine("Please provide url and directory path in arguments");
-                return;
-            }
+            
 
         }
     }
