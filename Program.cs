@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Text.RegularExpressions;
 
@@ -14,14 +15,15 @@ namespace k173652_Q1
                  Regex reUrl = new Regex(regForUrl, RegexOptions.IgnoreCase);
                 string regForDirectory = @"^(?:[a-zA-Z]\:(\\|\/)|file\:\/\/|\\\\|\.(\/|\\))([^\\\/\:\*\?\<\>\'\|]+(\\|\/){0,1})+$";
                 Regex rePath = new Regex(regForDirectory,RegexOptions.IgnoreCase);
-            
-                if (reUrl.IsMatch((args[0])) && rePath.IsMatch((args[1])))
+                string url = ConfigurationManager.AppSettings["url"];
+                string script = ConfigurationManager.AppSettings["directorypath"];
+                if (reUrl.IsMatch((url)) && rePath.IsMatch((script)))
                 {
                     WebClient wc = new WebClient();
                     DateTime today = DateTime.Today;
                     string FileName = "Summary" + today.ToString("ddMMMyy") + ".html";
-                    wc.DownloadFile(args[0], args[1] + @"\" + FileName);
-                    Console.WriteLine(args[1] + @"\ - will contain a file named " + FileName);
+                    wc.DownloadFile(url, script + @"\" + FileName);
+                    Console.WriteLine(script + @"\ - will contain a file named " + FileName);
                 }
                 else
                 {
